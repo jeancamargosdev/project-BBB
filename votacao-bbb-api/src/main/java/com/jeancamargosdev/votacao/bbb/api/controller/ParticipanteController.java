@@ -6,6 +6,7 @@ import com.jeancamargosdev.votacao.bbb.api.repository.ParametroRepository;
 import com.jeancamargosdev.votacao.bbb.api.repository.ParticipanteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/participantes")
 @AllArgsConstructor
+@CrossOrigin
 public class ParticipanteController
 {
     private final ParticipanteRepository repository;
@@ -36,6 +39,13 @@ public class ParticipanteController
         }
 
         return ResponseEntity.ok(opt.get());
+    }
+
+    @GetMapping("/todos")
+    public ResponseEntity<List<ParticipanteModel>> todos(){
+        List<ParticipanteModel> list = repository.findAll();
+
+        return ResponseEntity.ok(list);
     }
 
 }
